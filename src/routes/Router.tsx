@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import LandingPage from "../pages/hero/LandingPage";
 import Pricing from "../pages/hero/Pricing";
+import Features from "../pages/hero/Features";
 
 const router = createBrowserRouter([
   {
@@ -10,6 +11,10 @@ const router = createBrowserRouter([
   {
     path: "/pricing",
     element: <Pricing />,
+  },
+  {
+    path: "/features",
+    element: <Features />,
   },
 ]);
 

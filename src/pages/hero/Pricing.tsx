@@ -16,7 +16,7 @@ const Pricing = () => {
       <Header />
 
       {/* Hero Section */}
-      <section className="px-6 sm:px-12 md:px-20 py-20 md:py-28 text-center">
+      <section className="px-6 sm:px-12 md:px-20 py-20 md:py-38 text-center">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight max-w-4xl mx-auto">
           Plans designed for how teams use AI
           <span className="block bg-linear-to-r from-pink-500 to-blue-400 bg-clip-text text-transparent">
