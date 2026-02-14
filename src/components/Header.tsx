@@ -42,7 +42,7 @@ const Header = () => {
         onClick={() => navigate("/")}
       >
         <img src={Logo} alt="LexiOps AI Logo" className="w-8 h-8 inline mr-2" />
-        <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-pink-500 to-blue-400 bg-clip-text text-transparent">
+        <h1 className="text-xl md:text-2xl font-bold bg-linear-to-r from-pink-500 to-blue-400 bg-clip-text text-transparent">
           LexiOps AI
         </h1>
       </div>
@@ -101,7 +101,7 @@ const Header = () => {
 
         <NavLink
           to="/sign-up"
-          className="px-4 py-2 rounded-lg bg-gradient-to-r from-pink-500 to-blue-400 text-black font-semibold shadow-lg hover:opacity-90 transition"
+          className="px-4 py-2 rounded-lg bg-linear-to-r from-pink-500 to-blue-400 text-black font-semibold shadow-lg hover:opacity-90 transition"
         >
           Get Started
         </NavLink>
@@ -137,7 +137,7 @@ const Header = () => {
 
           <NavLink
             to="/sign-up"
-            className="px-4 py-2 rounded-lg bg-gradient-to-r from-pink-500 to-blue-400 text-black font-semibold shadow-lg hover:opacity-90 transition text-center"
+            className="px-4 py-2 rounded-lg bg-linear-to-r from-pink-500 to-blue-400 text-black font-semibold shadow-lg hover:opacity-90 transition text-center"
           >
             Get Started
           </NavLink>

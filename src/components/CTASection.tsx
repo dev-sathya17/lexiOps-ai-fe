@@ -5,7 +5,7 @@ const CTASection = () => {
     <section
       className="
       text-center py-16 px-6 sm:py-20
-      bg-gradient-to-t from-gray-100 to-white
+      bg-linear-to-t from-gray-100 to-white
       dark:from-zinc-950/40 dark:to-black
       transition-colors duration-300
     "
@@ -22,7 +22,7 @@ const CTASection = () => {
         to="/sign-up"
         className="
           px-8 py-4 rounded-xl 
-          bg-gradient-to-r from-pink-500 to-blue-400 
+          bg-linear-to-r from-pink-500 to-blue-400 
           text-white dark:text-black 
           font-semibold shadow-lg 
           hover:opacity-90 transition
