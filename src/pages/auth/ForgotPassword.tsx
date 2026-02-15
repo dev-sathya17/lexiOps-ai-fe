@@ -40,7 +40,7 @@ const ForgotPassword = () => {
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="w-full max-w-md px-6 py-8 md:p-10 rounded-2xl
-                     bg-gradient-to-br from-white/10 to-gray-50/5 dark:from-zinc-900 dark:to-black
+                     bg-linear-to-br from-white/10 to-gray-50/5 dark:from-zinc-900 dark:to-black
                      shadow-lg border border-zinc-300 dark:border-zinc-800 space-y-6 backdrop-blur-sm
                      transition-colors duration-300 overflow-hidden"
         >
