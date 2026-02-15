@@ -1,29 +1,25 @@
 import { createBrowserRouter } from "react-router-dom";
+import AppLayout from "../layouts/AppLayout";
+import Docs from "../pages/hero/Docs";
+import Features from "../pages/hero/Features";
 import LandingPage from "../pages/hero/LandingPage";
 import Pricing from "../pages/hero/Pricing";
-import Features from "../pages/hero/Features";
-import Docs from "../pages/hero/Docs";
+import NotFound from "../utils/NotFound";
 import SignUp from "../pages/auth/SignUp";
 import Login from "../pages/auth/Login";
-import ForgotPassword from "../pages/auth/ForgotPassword";
 import ResetPassword from "../pages/auth/ResetPassword";
+import ForgotPassword from "../pages/auth/ForgotPassword";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <LandingPage />,
-  },
-  {
-    path: "/pricing",
-    element: <Pricing />,
-  },
-  {
-    path: "/features",
-    element: <Features />,
-  },
-  {
-    path: "/docs",
-    element: <Docs />,
+    element: <AppLayout />,
+    children: [
+      { path: "/", element: <LandingPage /> },
+      { path: "/pricing", element: <Pricing /> },
+      { path: "/features", element: <Features /> },
+      { path: "/docs", element: <Docs /> },
+      { path: "*", element: <NotFound /> },
+    ],
   },
   {
     path: "/sign-up",
@@ -44,4 +40,3 @@ const router = createBrowserRouter([
 ]);
 
 export default router;
-

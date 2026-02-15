@@ -13,7 +13,7 @@ const LandingPage = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setProgress((p) => (p >= 100 ? 100 : p + 10));
+      setProgress((p) => (p >= 100 ? 100 : p + 50));
     }, 400);
 
     return () => clearInterval(interval);
@@ -26,7 +26,7 @@ const LandingPage = () => {
   return (
     <>
       {progress === 100 ? (
-        <div className="min-h-screen w-full flex flex-col bg-linear-to-b from-white via-gray-50 to-white text-gray-800 dark:from-black dark:via-zinc-950 dark:to-black dark:text-gray-200 transition-colors duration-300">
+        <div>
           {/* Header */}
           <Header />
 

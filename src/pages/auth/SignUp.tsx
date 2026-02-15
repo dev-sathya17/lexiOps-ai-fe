@@ -45,7 +45,7 @@ const SignUp = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setProgress((p) => (p >= 100 ? 100 : p + 10));
+      setProgress((p) => (p >= 100 ? 100 : p + 50));
     }, 400);
 
     return () => clearInterval(interval);

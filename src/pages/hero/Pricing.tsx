@@ -12,7 +12,7 @@ const Pricing = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setProgress((p) => (p >= 100 ? 100 : p + 10));
+      setProgress((p) => (p >= 100 ? 100 : p + 50));
     }, 400);
 
     return () => clearInterval(interval);
@@ -25,7 +25,7 @@ const Pricing = () => {
   return (
     <>
       {progress === 100 ? (
-        <div className="min-h-screen w-full bg-linear-to-b from-gray-50 to-white text-gray-900 dark:from-black dark:via-zinc-950 dark:to-black dark:text-gray-200 flex flex-col transition-colors duration-300">
+        <div>
           {/* Header Section */}
           <Header />
 
