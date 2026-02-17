@@ -1,9 +1,7 @@
-import { useState, useEffect, useRef } from "react";
-import { createPortal } from "react-dom";
+import { useState } from "react";
 import {
   MessageSquare,
   MoreHorizontal,
-  LogOut,
   Plus,
   PanelLeftClose,
   PanelLeftOpen,
@@ -11,9 +9,6 @@ import {
   Search as SearchIcon,
   Star,
   Trash2,
-  Settings,
-  Sun,
-  Moon,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "../../assets/logo.png";
@@ -43,67 +38,7 @@ export default function Sidebar({
   className = "",
 }: SidebarProps) {
   const [activeMenuId, setActiveMenuId] = useState<string | null>(null);
-  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [starredIds, setStarredIds] = useState<string[]>([]);
-  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
-  const profileRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const saved = localStorage.getItem("theme");
-    if (
-      saved === "dark" ||
-      (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
-
-    // Update menu position on resize or scroll
-    const updatePosition = () => {
-      if (isProfileMenuOpen && profileRef.current) {
-        const rect = profileRef.current.getBoundingClientRect();
-        // Position above the profile item
-        setMenuPosition({
-          top: rect.top - 10, // 10px gap
-          left: rect.left,
-        });
-      }
-    };
-
-    window.addEventListener("resize", updatePosition);
-    window.addEventListener("scroll", updatePosition, true);
-
-    return () => {
-      window.removeEventListener("resize", updatePosition);
-      window.removeEventListener("scroll", updatePosition, true);
-    };
-  }, [isProfileMenuOpen]);
-
-  // Calculate position when opening
-  useEffect(() => {
-    if (isProfileMenuOpen && profileRef.current) {
-      const rect = profileRef.current.getBoundingClientRect();
-      setMenuPosition({
-        top: rect.top - 75,
-        left: rect.left,
-      });
-    }
-  }, [isProfileMenuOpen]);
-
-  const toggleTheme = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    const newTheme = theme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    if (newTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-    setIsProfileMenuOpen(false);
-  };
 
   const toggleMenu = (id: string, e: React.MouseEvent) => {
     e.preventDefault();
@@ -145,7 +80,7 @@ export default function Sidebar({
                 </div>
                 <button
                   onClick={toggleSidebar}
-                  className="p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-zinc-800 text-gray-500 dark:text-gray-400"
+                  className="cursor-pointer p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-zinc-800 text-gray-500 dark:text-gray-400"
                 >
                   <PanelLeftClose size={20} />
                 </button>
@@ -157,7 +92,7 @@ export default function Sidebar({
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={toggleSidebar}
-                className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-zinc-800 text-gray-500 dark:text-gray-400 mt-1"
+                className="cursor-pointer p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-zinc-800 text-gray-500 dark:text-gray-400 mt-1"
               >
                 <PanelLeftOpen size={20} />
               </motion.button>
@@ -169,7 +104,7 @@ export default function Sidebar({
         <div className="px-4 pb-4">
           {isCollapsed ? (
             <button
-              className="w-12 h-12 flex items-center justify-center rounded-2xl bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 text-gray-700 dark:text-gray-200 shadow-sm mx-auto transition-all duration-200 active:scale-95"
+              className="cursor-pointer w-12 h-12 flex items-center justify-center rounded-2xl bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 text-gray-700 dark:text-gray-200 shadow-sm mx-auto transition-all duration-200 active:scale-95"
               onClick={() => console.log("New Chat")}
               title="New Chat"
             >
@@ -177,7 +112,7 @@ export default function Sidebar({
             </button>
           ) : (
             <button
-              className="w-full flex items-center justify-between px-4 py-3 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 text-gray-700 dark:text-gray-200 rounded-2xl shadow-sm transition-all duration-200 text-sm font-semibold active:scale-[0.98] group"
+              className="cursor-pointer w-full flex items-center justify-between px-4 py-3 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 text-gray-700 dark:text-gray-200 rounded-2xl shadow-sm transition-all duration-200 text-sm font-semibold active:scale-[0.98] group"
               onClick={() => console.log("New Chat")}
             >
               <div className="flex items-center gap-3">
@@ -195,7 +130,7 @@ export default function Sidebar({
         <div className="px-4 pb-2">
           {isCollapsed ? (
             <button
-              className="w-12 h-12 flex items-center justify-center rounded-2xl text-gray-400 hover:bg-gray-50 dark:hover:bg-zinc-800 hover:text-pink-500 transition-all mx-auto"
+              className="cursor-pointer w-12 h-12 flex items-center justify-center rounded-2xl text-gray-400 hover:bg-gray-50 dark:hover:bg-zinc-800 hover:text-pink-500 transition-all mx-auto"
               title="Search chats"
               onClick={() => alert("Search clicked!")}
             >
@@ -204,7 +139,7 @@ export default function Sidebar({
           ) : (
             <button
               onClick={() => alert("Search clicked!")}
-              className="w-full flex items-center gap-3 px-4 py-2.5 bg-gray-50/50 dark:bg-white/5 border border-transparent hover:border-pink-500/20 hover:bg-white dark:hover:bg-white/10 rounded-xl text-gray-400 transition-all group"
+              className="cursor-pointer w-full flex items-center gap-3 px-4 py-2.5 bg-gray-50/50 dark:bg-white/5 border border-transparent hover:border-pink-500/20 hover:bg-white dark:hover:bg-white/10 rounded-xl text-gray-400 transition-all group"
             >
               <SearchIcon
                 size={18}
@@ -373,96 +308,30 @@ export default function Sidebar({
           </AnimatePresence>
         </div>
 
-        {/* Footer: User Profile & Logout */}
-        <div className="p-4 bg-white dark:bg-zinc-950 flex flex-col gap-1">
-          {/* Profile */}
-          <div className="relative" ref={profileRef}>
-            <div
-              className={`flex items-center ${isCollapsed ? "justify-center" : "gap-3"} p-2 rounded-xl hover:bg-gray-50 dark:hover:bg-zinc-800/50 cursor-pointer transition-all duration-200 group`}
-              onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-            >
-              <div className="w-9 h-9 rounded-full bg-linear-to-tr from-pink-500/80 to-violet-500/80 flex items-center justify-center text-white p-[2px] shrink-0 shadow-sm group-hover:shadow-md transition-shadow">
-                <div className="w-full h-full rounded-full bg-zinc-900 flex items-center justify-center overflow-hidden">
-                  <User size={18} className="text-gray-300" />
-                </div>
-              </div>
-
-              {!isCollapsed && (
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate">
-                    Demo User
-                  </p>
-                  <p className="text-[11px] text-gray-500 dark:text-gray-500 font-medium truncate uppercase tracking-wider">
-                    Free Plan
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Logout Button */}
-          <button
-            className={`flex items-center ${isCollapsed ? "justify-center" : "justify-start gap-3 px-3"} py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-red-50 dark:hover:bg-red-950/20 hover:text-red-600 dark:hover:text-red-400 transition-all duration-200 w-full group`}
-            title="Log out"
+        {/* Footer: User Profile (View Only) */}
+        <div className="p-4 bg-white dark:bg-zinc-950">
+          <div
+            className={`flex items-center ${isCollapsed ? "justify-center" : "gap-3"} p-2 rounded-xl transition-all duration-200`}
           >
-            <LogOut
-              size={18}
-              className="group-hover:scale-110 transition-transform"
-            />
+            <div className="w-9 h-9 rounded-full bg-linear-to-tr from-pink-500/80 to-violet-500/80 flex items-center justify-center text-white p-[2px] shrink-0 shadow-sm">
+              <div className="w-full h-full rounded-full bg-zinc-900 flex items-center justify-center overflow-hidden">
+                <User size={18} className="text-gray-300" />
+              </div>
+            </div>
+
             {!isCollapsed && (
-              <span className="text-sm font-medium">Log out</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate">
+                  Demo User
+                </p>
+                <p className="text-[11px] text-gray-500 dark:text-gray-500 font-medium truncate uppercase tracking-wider">
+                  Free Plan
+                </p>
+              </div>
             )}
-          </button>
+          </div>
         </div>
       </motion.aside>
-
-      {/* Profile Menu Portal */}
-      {createPortal(
-        <AnimatePresence>
-          {isProfileMenuOpen && (
-            <>
-              {/* Backdrop */}
-              <div
-                className="fixed inset-0 z-[9998]"
-                onClick={() => setIsProfileMenuOpen(false)}
-              />
-              {/* Menu */}
-              <motion.div
-                initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                style={{
-                  top: menuPosition.top,
-                  left: menuPosition.left,
-                  transform: "translateY(-100%)", // Shift up so bottom aligns with top calculation
-                }}
-                className={`fixed z-[9999] mb-2 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-white/10 shadow-lg rounded-xl overflow-hidden min-w-[200px] -mt-2`}
-              >
-                <div className="p-1">
-                  <button
-                    className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg transition-colors"
-                    onClick={() => {
-                      alert("Settings clicked!");
-                      setIsProfileMenuOpen(false);
-                    }}
-                  >
-                    <Settings size={18} />
-                    <span>Settings</span>
-                  </button>
-                  <button
-                    className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg transition-colors"
-                    onClick={toggleTheme}
-                  >
-                    {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-                    <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
-                  </button>
-                </div>
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence>,
-        document.body,
-      )}
     </>
   );
 }
