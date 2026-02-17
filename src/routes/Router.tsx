@@ -9,6 +9,7 @@ import SignUp from "../pages/auth/SignUp";
 import Login from "../pages/auth/Login";
 import ResetPassword from "../pages/auth/ResetPassword";
 import ForgotPassword from "../pages/auth/ForgotPassword";
+import ChatPage from "../pages/chat/ChatPage";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
   {
     path: "/reset-password",
     element: <ResetPassword />,
+  },
+  {
+    path: "/chat",
+    element: <ChatPage />,
   },
 ]);
 
