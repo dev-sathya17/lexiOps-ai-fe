@@ -1,17 +1,12 @@
 import { useState } from "react";
 import MessageList, { type Message } from "./MessageList";
 import MessageInput from "./MessageInput";
-
-const INITIAL_MESSAGES: Message[] = [
-  {
-    id: "1",
-    role: "assistant",
-    content: "Hello! I'm Lexi, your AI assistant. How can I help you today?",
-  },
-];
+import ChatNavbar from "./ChatNavbar";
+import { motion, AnimatePresence } from "framer-motion";
+import { Sparkles, Plus } from "lucide-react";
 
 export default function ChatArea() {
-  const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSendMessage = async (content: string) => {
@@ -38,11 +33,44 @@ export default function ChatArea() {
   };
 
   return (
-    <div className="flex flex-col h-full overflow-hidden bg-transparent dark:bg-black/50 relative">
-      <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] dark:opacity-5 pointer-events-none"></div>
+    <div className="flex flex-col h-full overflow-hidden bg-white dark:bg-zinc-950 relative">
+      <div className="flex-1 relative overflow-hidden flex flex-col">
+        <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#ffffff10_1px,transparent_1px)] [background-size:24px_24px] opacity-20 pointer-events-none"></div>
 
-      <MessageList messages={messages} />
-      <MessageInput onSendMessage={handleSendMessage} isLoading={isLoading} />
+        <div className="flex-1 overflow-y-auto scrollbar-thin">
+          <AnimatePresence mode="wait">
+            {messages.length === 0 ? (
+              <motion.div
+                key="empty-state"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="h-full flex flex-col items-center justify-center px-6 text-center"
+              >
+                <div className="w-20 h-20 rounded-3xl bg-linear-to-tr from-pink-500 to-violet-500 p-[1px] mb-8 shadow-2xl shadow-pink-500/20">
+                  <div className="w-full h-full rounded-[23px] bg-white dark:bg-zinc-950 flex items-center justify-center overflow-hidden">
+                    <Sparkles size={32} className="text-pink-500" />
+                  </div>
+                </div>
+                <h1 className="text-5xl md:text-6xl font-black tracking-tight text-gray-900 dark:text-white mb-6">
+                  Hello,{" "}
+                  <span className="bg-linear-to-r from-pink-500 via-violet-500 to-indigo-500 bg-clip-text text-transparent">
+                    Demo User
+                  </span>
+                </h1>
+                <p className="text-gray-500 dark:text-gray-400 text-xl max-w-lg leading-relaxed font-medium">
+                  What can I help you discover today? Start a conversation using
+                  the prompts below.
+                </p>
+              </motion.div>
+            ) : (
+              <MessageList messages={messages} />
+            )}
+          </AnimatePresence>
+        </div>
+
+        <MessageInput onSendMessage={handleSendMessage} isLoading={isLoading} />
+      </div>
     </div>
   );
 }

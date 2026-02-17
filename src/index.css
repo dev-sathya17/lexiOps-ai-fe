@@ -38,8 +38,11 @@ input[type="date"] {
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8f9fb;
+  --foreground: #0f172a;
+  --sidebar-bg: #ffffff;
+  --border-light: #f1f5f9;
+  --accent-pink: #ec4899;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -59,15 +62,17 @@ input[type="date"] {
 }
 
 body {
-  font-family: "Rubik";
+  font-family: "Rubik", sans-serif;
   background: var(--background);
   color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -75,11 +80,20 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-zinc-700 rounded-full;
+  background: #cbd5e1; /* gray-300 */
+  border-radius: 9999px;
   border: 2px solid transparent;
   background-clip: content-box;
 }
 
+.dark ::-webkit-scrollbar-thumb {
+  background: #3f3f46; /* zinc-700 */
+}
+
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400 dark:bg-zinc-600;
+  background: #94a3b8; /* gray-400 */
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #52525b; /* zinc-600 */
 }

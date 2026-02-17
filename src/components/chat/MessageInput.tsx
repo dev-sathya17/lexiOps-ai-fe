@@ -53,8 +53,8 @@ export default function MessageInput({
   };
 
   return (
-    <div className="p-4 border-t border-gray-200 dark:border-white/10 bg-white dark:bg-zinc-900 relative">
-      <div className="max-w-3xl mx-auto relative flex items-end gap-2 bg-gray-100 dark:bg-zinc-800 p-2 rounded-xl border border-transparent focus-within:border-pink-500/50 focus-within:ring-2 focus-within:ring-pink-500/20 transition-all">
+    <div className="p-4 bg-white dark:bg-zinc-950 relative">
+      <div className="mx-auto relative flex items-end gap-2 bg-gray-100 dark:bg-zinc-800 p-2 rounded-xl border border-transparent focus-within:border-pink-500/50 focus-within:ring-2 focus-within:ring-pink-500/20 transition-all">
         {/* Attachment Menu Trigger */}
         <div className="relative" ref={menuRef}>
           <button

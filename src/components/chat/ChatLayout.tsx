@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
-import { Menu } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import AdminNavbar from "./AdminNavbar";
+import ChatNavbar from "./ChatNavbar";
 
 interface ChatLayoutProps {
   children: React.ReactNode;
@@ -11,9 +10,6 @@ interface ChatLayoutProps {
 export default function ChatLayout({ children }: ChatLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
-
-  // Dummy admin check - replace with actual auth logic
-  const isAdmin = true;
 
   // Handle window resize for responsiveness
   useEffect(() => {
@@ -37,7 +33,7 @@ export default function ChatLayout({ children }: ChatLayoutProps) {
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#f3f4f6] dark:bg-black text-gray-900 dark:text-gray-100 font-sans">
+    <div className="flex h-screen overflow-hidden bg-[#F5F6F8] dark:bg-black text-gray-900 dark:text-gray-100 font-sans p-3 gap-3">
       {/* Mobile Overlay */}
       <AnimatePresence>
         {isMobile && isSidebarOpen && (
@@ -51,15 +47,17 @@ export default function ChatLayout({ children }: ChatLayoutProps) {
         )}
       </AnimatePresence>
 
-      {/* Sidebar */}
+      {/* Sidebar Container */}
       <div
         className={`${
           isMobile
-            ? "fixed inset-y-0 left-0 z-40 transform transition-transform duration-300 ease-in-out"
+            ? "fixed inset-y-3 left-3 z-40 transform transition-transform duration-300 ease-in-out"
             : "relative"
         } ${
-          isMobile && !isSidebarOpen ? "-translate-x-full" : "translate-x-0"
-        }`}
+          isMobile && !isSidebarOpen
+            ? "-translate-x-[calc(100%+24px)]"
+            : "translate-x-0"
+        } h-full overflow-hidden rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white dark:border-white/5`}
       >
         <Sidebar
           isCollapsed={!isMobile && !isSidebarOpen}
@@ -67,28 +65,12 @@ export default function ChatLayout({ children }: ChatLayoutProps) {
         />
       </div>
 
-      {/* Main Content Area */}
-      <main className="flex-1 flex flex-col min-w-0 relative">
-        {/* Admin Navbar */}
-        {isAdmin && <AdminNavbar />}
-
-        {/* Mobile Header */}
-        {isMobile && (
-          <div className="h-14 border-b border-gray-200 dark:border-white/10 flex items-center px-4 justify-between bg-white dark:bg-zinc-950">
-            <button
-              onClick={() => setIsSidebarOpen(true)}
-              className="p-2 -ml-2 rounded-md hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-500 dark:text-gray-400"
-            >
-              <Menu size={24} />
-            </button>
-            <span className="font-semibold text-gray-800 dark:text-gray-200">
-              New Chat
-            </span>
-            <div className="w-8" /> {/* Spacer for centering */}
-          </div>
-        )}
-
-        {children}
+      {/* Main Content Area Container */}
+      <main className="flex flex-col h-full flex-1 gap-3 overflow-hidden">
+        <ChatNavbar onToggleSidebar={toggleSidebar} />
+        <main className="flex flex-col relative h-full overflow-hidden rounded-[2rem] bg-white dark:bg-zinc-950 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white dark:border-white/5">
+          {children}
+        </main>
       </main>
     </div>
   );

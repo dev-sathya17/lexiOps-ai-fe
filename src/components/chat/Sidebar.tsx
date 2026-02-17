@@ -5,9 +5,11 @@ import {
   MoreHorizontal,
   LogOut,
   Plus,
-  ChevronLeft,
-  ChevronRight,
+  PanelLeftClose,
+  PanelLeftOpen,
   User,
+  Search as SearchIcon,
+  Star,
   Trash2,
   Settings,
   Sun,
@@ -43,6 +45,7 @@ export default function Sidebar({
   const [activeMenuId, setActiveMenuId] = useState<string | null>(null);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [starredIds, setStarredIds] = useState<string[]>([]);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
   const profileRef = useRef<HTMLDivElement>(null);
 
@@ -56,16 +59,6 @@ export default function Sidebar({
     } else {
       setTheme("light");
     }
-
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        profileRef.current &&
-        !profileRef.current.contains(event.target as Node)
-      ) {
-        // Also check if click is inside the portal menu (handled by portal implementation typically having a backdrop or ref check)
-        // For simplicity here, we'll let the backdrop in the portal handle closing
-      }
-    };
 
     // Update menu position on resize or scroll
     const updatePosition = () => {
@@ -93,7 +86,7 @@ export default function Sidebar({
     if (isProfileMenuOpen && profileRef.current) {
       const rect = profileRef.current.getBoundingClientRect();
       setMenuPosition({
-        top: rect.top - 10,
+        top: rect.top - 75,
         left: rect.left,
       });
     }
@@ -113,6 +106,7 @@ export default function Sidebar({
   };
 
   const toggleMenu = (id: string, e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
     setActiveMenuId(activeMenuId === id ? null : id);
   };
@@ -125,9 +119,9 @@ export default function Sidebar({
     <>
       <motion.aside
         initial={false}
-        animate={{ width: isCollapsed ? "4.5rem" : "16rem" }}
+        animate={{ width: isCollapsed ? "5rem" : "18rem" }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className={`h-full bg-[#f9fafb] dark:bg-zinc-900 border-r border-gray-200 dark:border-white/10 flex flex-col relative z-20 ${className}`}
+        className={`h-full bg-white dark:bg-zinc-950 flex flex-col relative z-20 ${className}`}
         onClick={handleSidebarClick}
       >
         {/* Top Section */}
@@ -153,7 +147,7 @@ export default function Sidebar({
                   onClick={toggleSidebar}
                   className="p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-zinc-800 text-gray-500 dark:text-gray-400"
                 >
-                  <ChevronLeft size={20} />
+                  <PanelLeftClose size={20} />
                 </button>
               </motion.div>
             ) : (
@@ -165,29 +159,58 @@ export default function Sidebar({
                 onClick={toggleSidebar}
                 className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-zinc-800 text-gray-500 dark:text-gray-400 mt-1"
               >
-                <ChevronRight size={20} />
+                <PanelLeftOpen size={20} />
               </motion.button>
             )}
           </AnimatePresence>
         </div>
 
         {/* New Chat Button */}
-        <div className="px-3 pb-2">
+        <div className="px-4 pb-4">
           {isCollapsed ? (
             <button
-              className="w-10 h-10 flex items-center justify-center rounded-lg bg-white dark:bg-zinc-800 hover:bg-gray-100 dark:hover:bg-zinc-700 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-white/10 shadow-sm mx-auto"
+              className="w-12 h-12 flex items-center justify-center rounded-2xl bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 text-gray-700 dark:text-gray-200 shadow-sm mx-auto transition-all duration-200 active:scale-95"
               onClick={() => console.log("New Chat")}
               title="New Chat"
             >
-              <Plus size={20} className="text-pink-500" />
+              <Plus size={22} className="text-pink-500" />
             </button>
           ) : (
             <button
-              className="w-full flex items-center gap-3 px-3 py-2 bg-white dark:bg-zinc-800 hover:bg-gray-100 dark:hover:bg-zinc-700 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-white/10 rounded-lg shadow-sm transition-colors text-sm font-medium"
+              className="w-full flex items-center justify-between px-4 py-3 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 text-gray-700 dark:text-gray-200 rounded-2xl shadow-sm transition-all duration-200 text-sm font-semibold active:scale-[0.98] group"
               onClick={() => console.log("New Chat")}
             >
-              <Plus size={18} className="text-pink-500" />
-              <span>New Chat</span>
+              <div className="flex items-center gap-3">
+                <Plus
+                  size={18}
+                  className="text-pink-500 group-hover:rotate-90 transition-transform duration-300"
+                />
+                <span>New Chat</span>
+              </div>
+            </button>
+          )}
+        </div>
+
+        {/* Search button */}
+        <div className="px-4 pb-2">
+          {isCollapsed ? (
+            <button
+              className="w-12 h-12 flex items-center justify-center rounded-2xl text-gray-400 hover:bg-gray-50 dark:hover:bg-zinc-800 hover:text-pink-500 transition-all mx-auto"
+              title="Search chats"
+              onClick={() => alert("Search clicked!")}
+            >
+              <SearchIcon size={20} />
+            </button>
+          ) : (
+            <button
+              onClick={() => alert("Search clicked!")}
+              className="w-full flex items-center gap-3 px-4 py-2.5 bg-gray-50/50 dark:bg-white/5 border border-transparent hover:border-pink-500/20 hover:bg-white dark:hover:bg-white/10 rounded-xl text-gray-400 transition-all group"
+            >
+              <SearchIcon
+                size={18}
+                className="group-hover:text-pink-500 transition-colors"
+              />
+              <span className="text-sm font-medium">Search chats</span>
             </button>
           )}
         </div>
@@ -202,57 +225,148 @@ export default function Sidebar({
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
               >
-                <div className="text-xs font-semibold text-gray-400 dark:text-gray-500 mb-2 px-2 mt-2">
-                  Recent
-                </div>
-                <div className="space-y-1">
-                  {DUMMY_HISTORY.map((chat) => (
-                    <div
-                      key={chat.id}
-                      className="group relative flex items-center gap-3 p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-zinc-800 cursor-pointer text-gray-700 dark:text-gray-300 transition-colors"
-                    >
-                      <MessageSquare
-                        size={18}
-                        className="shrink-0 text-gray-400"
-                      />
-
-                      <div className="flex-1 truncate text-sm">
-                        {chat.title}
-                      </div>
-
-                      <button
-                        onClick={(e) => toggleMenu(chat.id, e)}
-                        className={`opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-gray-300 dark:hover:bg-zinc-700 text-gray-500 transition-opacity ${activeMenuId === chat.id ? "opacity-100 bg-gray-300 dark:bg-zinc-700" : ""}`}
-                      >
-                        <MoreHorizontal size={16} />
-                      </button>
-
-                      <AnimatePresence>
-                        {activeMenuId === chat.id && (
-                          <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.95 }}
-                            className="absolute right-2 top-8 z-50 w-32 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-white/10 shadow-lg rounded-lg overflow-hidden py-1"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <button className="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-800 flex items-center gap-2">
-                              <span className="w-4">
-                                <MessageSquare size={14} />
-                              </span>{" "}
-                              Rename
-                            </button>
-                            <button className="w-full text-left px-3 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center gap-2">
-                              <span className="w-4">
-                                <Trash2 size={14} />
-                              </span>{" "}
-                              Delete
-                            </button>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                {/* Starred Section */}
+                {DUMMY_HISTORY.some((h) => starredIds.includes(h.id)) && (
+                  <>
+                    <div className="text-[11px] font-bold text-gray-400 dark:text-gray-500 mb-3 px-3 uppercase tracking-[0.1em] mt-2">
+                      Starred
                     </div>
-                  ))}
+                    <div className="space-y-0.5 mb-4">
+                      {DUMMY_HISTORY.filter((h) =>
+                        starredIds.includes(h.id),
+                      ).map((chat) => (
+                        <div
+                          key={`starred-${chat.id}`}
+                          className="group relative flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-50 dark:hover:bg-zinc-800/50 cursor-pointer text-gray-900 dark:text-gray-100 font-medium transition-all duration-200"
+                        >
+                          <Star
+                            size={18}
+                            className="shrink-0 text-amber-400 fill-amber-400"
+                          />
+                          <div className="flex-1 truncate text-sm">
+                            {chat.title}
+                          </div>
+                          <button
+                            onClick={(e) => toggleMenu(chat.id, e)}
+                            className={`opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-gray-200 dark:hover:bg-zinc-700 text-gray-500 transition-opacity ${activeMenuId === chat.id ? "opacity-100 bg-gray-200 dark:bg-zinc-700" : ""}`}
+                          >
+                            <MoreHorizontal size={16} />
+                          </button>
+                          <AnimatePresence>
+                            {activeMenuId === chat.id && (
+                              <motion.div
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                className="absolute right-2 top-8 z-50 w-36 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-white/10 shadow-xl rounded-xl overflow-hidden py-1"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <button
+                                  className="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-zinc-800 flex items-center gap-2"
+                                  onClick={() => {
+                                    setStarredIds((prev) =>
+                                      prev.includes(chat.id)
+                                        ? prev.filter((id) => id !== chat.id)
+                                        : [...prev, chat.id],
+                                    );
+                                    setActiveMenuId(null);
+                                  }}
+                                >
+                                  <Star
+                                    size={14}
+                                    className="fill-amber-400 text-amber-400"
+                                  />
+                                  Unstar
+                                </button>
+                                <button className="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-zinc-800 flex items-center gap-2">
+                                  <MessageSquare size={14} />
+                                  Rename
+                                </button>
+                                <button className="w-full text-left px-3 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center gap-2">
+                                  <Trash2 size={14} />
+                                  Delete
+                                </button>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
+
+                <div className="text-[11px] font-bold text-gray-400 dark:text-gray-500 mb-3 px-3 uppercase tracking-[0.1em] mt-2">
+                  History
+                </div>
+                <div className="space-y-0.5">
+                  {DUMMY_HISTORY.filter((h) => !starredIds.includes(h.id)).map(
+                    (chat) => (
+                      <div
+                        key={chat.id}
+                        className="group relative flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-50 dark:hover:bg-zinc-800/50 cursor-pointer text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-all duration-200"
+                      >
+                        <MessageSquare
+                          size={18}
+                          className="shrink-0 text-gray-400"
+                        />
+
+                        <div className="flex-1 truncate text-sm">
+                          {chat.title}
+                        </div>
+
+                        <button
+                          onClick={(e) => toggleMenu(chat.id, e)}
+                          className={`opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-gray-200 dark:hover:bg-zinc-700 text-gray-500 transition-opacity ${activeMenuId === chat.id ? "opacity-100 bg-gray-200 dark:bg-zinc-700" : ""}`}
+                        >
+                          <MoreHorizontal size={16} />
+                        </button>
+
+                        <AnimatePresence>
+                          {activeMenuId === chat.id && (
+                            <motion.div
+                              initial={{ opacity: 0, scale: 0.95 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              exit={{ opacity: 0, scale: 0.95 }}
+                              className="absolute right-2 top-8 z-50 w-36 bg-white dark:bg-zinc-900 border border-gray-100 dark:border-white/10 shadow-xl rounded-xl overflow-hidden py-1"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <button
+                                className="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-zinc-800 flex items-center gap-2"
+                                onClick={() => {
+                                  setStarredIds((prev) =>
+                                    prev.includes(chat.id)
+                                      ? prev.filter((id) => id !== chat.id)
+                                      : [...prev, chat.id],
+                                  );
+                                  setActiveMenuId(null);
+                                }}
+                              >
+                                <Star
+                                  size={14}
+                                  className={
+                                    starredIds.includes(chat.id)
+                                      ? "fill-amber-400 text-amber-400"
+                                      : ""
+                                  }
+                                />
+                                {starredIds.includes(chat.id)
+                                  ? "Unstar"
+                                  : "Star"}
+                              </button>
+                              <button className="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-zinc-800 flex items-center gap-2">
+                                <MessageSquare size={14} />
+                                Rename
+                              </button>
+                              <button className="w-full text-left px-3 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center gap-2">
+                                <Trash2 size={14} />
+                                Delete
+                              </button>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    ),
+                  )}
                 </div>
               </motion.div>
             )}
@@ -260,23 +374,25 @@ export default function Sidebar({
         </div>
 
         {/* Footer: User Profile & Logout */}
-        <div className="p-3 border-t border-gray-200 dark:border-white/10 bg-[#f9fafb] dark:bg-zinc-900 flex flex-col gap-2">
+        <div className="p-4 bg-white dark:bg-zinc-950 flex flex-col gap-1">
           {/* Profile */}
           <div className="relative" ref={profileRef}>
             <div
-              className={`flex items-center ${isCollapsed ? "justify-center" : "gap-3"} p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-zinc-800 cursor-pointer transition-colors`}
+              className={`flex items-center ${isCollapsed ? "justify-center" : "gap-3"} p-2 rounded-xl hover:bg-gray-50 dark:hover:bg-zinc-800/50 cursor-pointer transition-all duration-200 group`}
               onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
             >
-              <div className="w-8 h-8 rounded-full bg-linear-to-tr from-pink-500 to-violet-500 flex items-center justify-center text-white font-bold shrink-0">
-                <User size={16} />
+              <div className="w-9 h-9 rounded-full bg-linear-to-tr from-pink-500/80 to-violet-500/80 flex items-center justify-center text-white p-[2px] shrink-0 shadow-sm group-hover:shadow-md transition-shadow">
+                <div className="w-full h-full rounded-full bg-zinc-900 flex items-center justify-center overflow-hidden">
+                  <User size={18} className="text-gray-300" />
+                </div>
               </div>
 
               {!isCollapsed && (
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 dark:text-gray-200 truncate">
+                  <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate">
                     Demo User
                   </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                  <p className="text-[11px] text-gray-500 dark:text-gray-500 font-medium truncate uppercase tracking-wider">
                     Free Plan
                   </p>
                 </div>
@@ -286,10 +402,13 @@ export default function Sidebar({
 
           {/* Logout Button */}
           <button
-            className={`flex items-center ${isCollapsed ? "justify-center" : "justify-start gap-3 px-2"} p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-zinc-800 hover:text-red-500 dark:hover:text-red-400 transition-colors w-full`}
+            className={`flex items-center ${isCollapsed ? "justify-center" : "justify-start gap-3 px-3"} py-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-red-50 dark:hover:bg-red-950/20 hover:text-red-600 dark:hover:text-red-400 transition-all duration-200 w-full group`}
             title="Log out"
           >
-            <LogOut size={18} />
+            <LogOut
+              size={18}
+              className="group-hover:scale-110 transition-transform"
+            />
             {!isCollapsed && (
               <span className="text-sm font-medium">Log out</span>
             )}
