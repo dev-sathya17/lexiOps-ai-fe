@@ -87,9 +87,12 @@ const SignUp = () => {
 
               {/* OAuth with Google Section */}
               <section>
-                <Button className="space-x-2 font-semibold bg-white/10 hover:bg-white/20 text-gray-800 dark:text-gray-200 dark:bg-white/5 dark:hover:bg-white/10 border border-zinc-700 dark:border-zinc-600 transition-colors duration-300">
-                  <img src={GoogleIcon} alt="google-logo" className="w-7 h-7" />
-                  <p>Sign in with Google</p>
+                <Button
+                  variant="secondary"
+                  className="w-full gap-2 font-semibold"
+                >
+                  <img src={GoogleIcon} alt="google-logo" className="w-6 h-6" />
+                  <span>Sign in with Google</span>
                 </Button>
               </section>
 
@@ -167,10 +170,12 @@ const SignUp = () => {
 
               {/* Submit Button */}
               <Button
+                type="submit"
                 onClick={handleSubmit(onSubmit)}
-                className="bg-pink-600 font-semibold hover:bg-pink-700 text-white w-full transition-colors duration-300"
+                variant="primary"
+                className="w-full font-bold"
               >
-                <p>Sign Up</p>
+                Sign Up
               </Button>
 
               {/* Navigation Section */}

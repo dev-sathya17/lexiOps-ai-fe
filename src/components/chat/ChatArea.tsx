@@ -1,7 +1,7 @@
 import { useState } from "react";
 import MessageList, { type Message } from "./MessageList";
 import MessageInput from "./MessageInput";
-import ChatNavbar from "./ChatNavbar";
+import Navbar from "../Navbar";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Plus } from "lucide-react";
 

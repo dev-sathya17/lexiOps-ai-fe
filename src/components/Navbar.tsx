@@ -14,23 +14,57 @@ import {
   Settings,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { NavLink } from "react-router-dom";
 
-interface ChatNavbarProps {
+interface NavbarProps {
   onToggleSidebar?: () => void;
+  activePath?: string;
 }
 
-export default function ChatNavbar({ onToggleSidebar }: ChatNavbarProps) {
+// type NavItem {
+//   icon: IconType;
+//   label: string;
+//   path: string;
+//   active: boolean;
+// }
+
+export default function Navbar({ onToggleSidebar, activePath }: NavbarProps) {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
   const profileRef = useRef<HTMLDivElement>(null);
 
   const navItems = [
-    { icon: MessageSquare, label: "Chat", active: true },
-    { icon: BarChart3, label: "Dashboard" },
-    { icon: Database, label: "Manage files" },
-    { icon: Users, label: "Manage Users" },
-    { icon: FolderTree, label: "Manage workspace" },
+    {
+      icon: MessageSquare,
+      label: "Chat",
+      path: "/chat",
+      active: activePath === "/chat",
+    },
+    {
+      icon: BarChart3,
+      label: "Dashboard",
+      path: "/dashboard",
+      active: activePath === "/dashboard",
+    },
+    {
+      icon: Database,
+      label: "Manage files",
+      path: "/manage-files",
+      active: activePath === "/manage-files",
+    },
+    {
+      icon: Users,
+      label: "Manage Users",
+      path: "/admin/users",
+      active: activePath === "/admin/users",
+    },
+    {
+      icon: FolderTree,
+      label: "Manage workspace",
+      path: "/manage-workspace",
+      active: activePath === "/manage-workspace",
+    },
   ];
 
   const toggleTheme = () => {
@@ -66,7 +100,8 @@ export default function ChatNavbar({ onToggleSidebar }: ChatNavbarProps) {
         {/* Center: Nav Items */}
         <div className="flex items-center gap-1 md:gap-2 overflow-x-auto no-scrollbar py-1">
           {navItems.map((item) => (
-            <button
+            <NavLink
+              to={item.path}
               key={item.label}
               className={`flex cursor-pointer items-center gap-2 px-2.5 md:px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 ${
                 item.active
@@ -81,7 +116,7 @@ export default function ChatNavbar({ onToggleSidebar }: ChatNavbarProps) {
               <span className="sm:hidden text-[10px]">
                 {item.active ? item.label : ""}
               </span>
-            </button>
+            </NavLink>
           ))}
         </div>
 

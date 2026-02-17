@@ -10,6 +10,7 @@ import Login from "../pages/auth/Login";
 import ResetPassword from "../pages/auth/ResetPassword";
 import ForgotPassword from "../pages/auth/ForgotPassword";
 import ChatPage from "../pages/chat/ChatPage";
+import ManageUsers from "../pages/admin/ManageUsers";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
       { path: "/pricing", element: <Pricing /> },
       { path: "/features", element: <Features /> },
       { path: "/docs", element: <Docs /> },
+      { path: "/admin/users", element: <ManageUsers /> },
       { path: "*", element: <NotFound /> },
     ],
   },

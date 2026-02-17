@@ -77,9 +77,12 @@ const Login = () => {
 
               {/* OAuth with Google Section */}
               <section>
-                <Button className="space-x-2 font-semibold bg-white/10 dark:bg-white/5 hover:bg-white/20 text-gray-900 dark:text-gray-200 border border-zinc-700 dark:border-white/10 transition-colors">
-                  <img src={GoogleIcon} alt="google-logo" className="w-7 h-7" />
-                  <p>Sign in with Google</p>
+                <Button
+                  variant="secondary"
+                  className="w-full gap-2 font-semibold"
+                >
+                  <img src={GoogleIcon} alt="google-logo" className="w-6 h-6" />
+                  <span>Sign in with Google</span>
                 </Button>
               </section>
 
@@ -111,8 +114,12 @@ const Login = () => {
               />
 
               {/* Submit Button */}
-              <Button className="bg-pink-600 hover:bg-pink-700 dark:text-white font-semibold w-full">
-                <p>Sign In</p>
+              <Button
+                type="submit"
+                variant="primary"
+                className="w-full font-bold"
+              >
+                Sign In
               </Button>
 
               {/* Remember Me & Forgot Password */}
@@ -126,7 +133,7 @@ const Login = () => {
                 />
                 <NavLink
                   to="/forgot-password"
-                  className="text-pink-500 dark:text-pink-400 hover:underline text-sm"
+                  className="w-full text-right text-pink-500 dark:text-pink-400 hover:underline text-sm"
                 >
                   Forgot Password?
                 </NavLink>
