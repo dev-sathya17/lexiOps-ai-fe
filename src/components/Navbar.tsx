@@ -44,8 +44,8 @@ export default function Navbar({ onToggleSidebar, activePath }: NavbarProps) {
     {
       icon: BarChart3,
       label: "Dashboard",
-      path: "/dashboard",
-      active: activePath === "/dashboard",
+      path: "/admin/dashboard",
+      active: activePath === "/admin/dashboard",
     },
     {
       icon: Database,
