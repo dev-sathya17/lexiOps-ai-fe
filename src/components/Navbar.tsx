@@ -5,6 +5,7 @@ import {
   FolderTree,
   Database,
   BarChart3,
+  LayoutDashboard,
   MessageSquare,
   Menu,
   Sun,
@@ -46,6 +47,12 @@ export default function Navbar({ onToggleSidebar, activePath }: NavbarProps) {
       label: "Dashboard",
       path: "/admin/dashboard",
       active: activePath === "/admin/dashboard",
+    },
+    {
+      icon: LayoutDashboard,
+      label: "Workspace",
+      path: "/workspace/dashboard",
+      active: activePath === "/workspace/dashboard",
     },
     {
       icon: Database,

@@ -323,9 +323,9 @@ export default function ManageFiles() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-black transition-colors duration-300 flex flex-col items-center">
-      <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-10 flex flex-col gap-12">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col gap-12">
         {/* Header & Navbar (Globally Centered) */}
-        <div className="space-y-10 w-full flex flex-col items-center">
+        <div className="space-y-6 w-full">
           <Navbar activePath="/admin/files" />
           <div className="pt-8 text-center max-w-2xl">
             <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight sm:text-5xl">
