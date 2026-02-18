@@ -12,6 +12,7 @@ import ForgotPassword from "../pages/auth/ForgotPassword";
 import ChatPage from "../pages/chat/ChatPage";
 import ManageUsers from "../pages/admin/ManageUsers";
 import ManageFiles from "../pages/admin/ManageFiles";
+import ManageWorkspaces from "../pages/admin/ManageWorkspaces";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
       { path: "/docs", element: <Docs /> },
       { path: "/admin/users", element: <ManageUsers /> },
       { path: "/admin/files", element: <ManageFiles /> },
+      { path: "/admin/workspaces", element: <ManageWorkspaces /> },
       { path: "*", element: <NotFound /> },
     ],
   },
