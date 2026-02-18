@@ -11,6 +11,7 @@ import ResetPassword from "../pages/auth/ResetPassword";
 import ForgotPassword from "../pages/auth/ForgotPassword";
 import ChatPage from "../pages/chat/ChatPage";
 import ManageUsers from "../pages/admin/ManageUsers";
+import ManageFiles from "../pages/admin/ManageFiles";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
       { path: "/features", element: <Features /> },
       { path: "/docs", element: <Docs /> },
       { path: "/admin/users", element: <ManageUsers /> },
+      { path: "/admin/files", element: <ManageFiles /> },
       { path: "*", element: <NotFound /> },
     ],
   },

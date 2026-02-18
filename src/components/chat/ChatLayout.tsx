@@ -66,7 +66,7 @@ export default function ChatLayout({ children }: ChatLayoutProps) {
       </div>
 
       {/* Main Content Area Container */}
-      <main className="flex flex-col h-full flex-1 gap-3 overflow-hidden">
+      <main className="flex flex-col h-full flex-1 gap-4 overflow-hidden">
         <Navbar onToggleSidebar={toggleSidebar} activePath="/chat" />
         <main className="flex flex-col relative h-full overflow-hidden rounded-[2rem] bg-white dark:bg-zinc-950 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white dark:border-white/5">
           {children}
