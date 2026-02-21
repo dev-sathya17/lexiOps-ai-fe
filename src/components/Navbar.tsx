@@ -13,6 +13,9 @@ import {
   LogOut,
   User,
   Settings,
+  CreditCard,
+  ChevronDown,
+  ShieldCheck,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "react-router-dom";
@@ -32,10 +35,16 @@ interface NavbarProps {
 export default function Navbar({ onToggleSidebar, activePath }: NavbarProps) {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [isManagementMenuOpen, setIsManagementMenuOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
+  const [managementPosition, setManagementPosition] = useState({
+    top: 0,
+    left: 0,
+  });
   const profileRef = useRef<HTMLDivElement>(null);
+  const managementRef = useRef<HTMLDivElement>(null);
 
-  const navItems = [
+  const mainNavItems = [
     {
       icon: MessageSquare,
       label: "Chat",
@@ -54,6 +63,8 @@ export default function Navbar({ onToggleSidebar, activePath }: NavbarProps) {
       path: "/workspace/dashboard",
       active: activePath === "/workspace/dashboard",
     },
+  ];
+  const managementItems = [
     {
       icon: Database,
       label: "Manage files",
@@ -72,7 +83,15 @@ export default function Navbar({ onToggleSidebar, activePath }: NavbarProps) {
       path: "/admin/workspaces",
       active: activePath === "/admin/workspaces",
     },
+    {
+      icon: CreditCard,
+      label: "Manage plans",
+      path: "/admin/plans",
+      active: activePath === "/admin/plans",
+    },
   ];
+
+  const isManagementActive = managementItems.some((item) => item.active);
 
   const toggleTheme = () => {
     const nextTheme = theme === "dark" ? "light" : "dark";
@@ -91,6 +110,16 @@ export default function Navbar({ onToggleSidebar, activePath }: NavbarProps) {
     }
   }, [isProfileMenuOpen]);
 
+  useEffect(() => {
+    if (isManagementMenuOpen && managementRef.current) {
+      const rect = managementRef.current.getBoundingClientRect();
+      setManagementPosition({
+        top: rect.bottom + 12,
+        left: rect.left,
+      });
+    }
+  }, [isManagementMenuOpen]);
+
   return (
     <div className="mb-0 sticky top-0 z-10 w-full flex justify-center py-4">
       <nav className="h-16 flex items-center gap-6 px-6 md:px-8 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-2xl rounded-[2.5rem] border border-gray-100 dark:border-white/5 shadow-[0_4px_20px_-5px_rgba(0,0,0,0.1),0_8px_32px_-4px_rgba(0,0,0,0.06)] dark:shadow-none w-fit max-w-full">
@@ -106,7 +135,7 @@ export default function Navbar({ onToggleSidebar, activePath }: NavbarProps) {
 
         {/* Center: Nav Items */}
         <div className="flex items-center gap-1 md:gap-2 overflow-x-auto no-scrollbar py-1">
-          {navItems.map((item) => (
+          {mainNavItems.map((item) => (
             <NavLink
               to={item.path}
               key={item.label}
@@ -125,6 +154,27 @@ export default function Navbar({ onToggleSidebar, activePath }: NavbarProps) {
               </span>
             </NavLink>
           ))}
+
+          {/* Management Dropdown Trigger */}
+          <div className="relative" ref={managementRef}>
+            <button
+              onClick={() => setIsManagementMenuOpen(!isManagementMenuOpen)}
+              className={`flex cursor-pointer items-center gap-3 px-4 md:px-5 py-2 rounded-2xl text-sm font-bold transition-all whitespace-nowrap shrink-0 ${
+                isManagementActive || isManagementMenuOpen
+                  ? "text-pink-500"
+                  : "text-gray-500 dark:text-gray-400 hover:text-pink-500 dark:hover:text-pink-500"
+              }`}
+            >
+              <ShieldCheck size={18} />
+              <span className="hidden sm:inline lowercase first-letter:uppercase">
+                Management
+              </span>
+              <ChevronDown
+                size={16}
+                className={`transition-transform duration-300 ${isManagementMenuOpen ? "rotate-180" : ""}`}
+              />
+            </button>
+          </div>
         </div>
 
         {/* Right: User Controls */}
@@ -201,6 +251,56 @@ export default function Navbar({ onToggleSidebar, activePath }: NavbarProps) {
                     <Settings size={18} />
                     <span>Settings</span>
                   </button>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>,
+        document.body,
+      )}
+
+      {/* Management Menu Portal */}
+      {createPortal(
+        <AnimatePresence>
+          {isManagementMenuOpen && (
+            <>
+              <div
+                className="fixed inset-0 z-[9998] cursor-pointer"
+                onClick={() => setIsManagementMenuOpen(false)}
+              />
+              <motion.div
+                initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                style={{
+                  top: managementPosition.top,
+                  left: managementPosition.left,
+                }}
+                className="fixed z-[9999] bg-white dark:bg-zinc-900 border border-gray-200 dark:border-white/10 shadow-xl rounded-2xl overflow-hidden min-w-[220px] p-2"
+              >
+                <div className="px-3 py-2 border-b border-gray-100 dark:border-white/5 mb-1">
+                  <p className="text-[11px] text-gray-400 uppercase tracking-widest font-bold">
+                    Administration
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  {managementItems.map((item) => (
+                    <NavLink
+                      to={item.path}
+                      key={item.label}
+                      onClick={() => setIsManagementMenuOpen(false)}
+                      className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-bold transition-all ${
+                        item.active
+                          ? "bg-pink-500/10 text-pink-500"
+                          : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white"
+                      }`}
+                    >
+                      <item.icon size={16} />
+                      <span className="lowercase first-letter:uppercase">
+                        {item.label}
+                      </span>
+                    </NavLink>
+                  ))}
                 </div>
               </motion.div>
             </>
