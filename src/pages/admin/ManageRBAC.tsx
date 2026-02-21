@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 import Navbar from "../../components/Navbar";
 import Button from "../../components/ui/Button";
 import Input from "../../components/ui/Input";
@@ -71,6 +72,7 @@ const INITIAL_PERMISSIONS: Permission[] = [
 ];
 
 export default function ManageRBAC() {
+  useDocumentTitle("Access Control");
   const [activeTab, setActiveTab] = useState<
     "roles" | "actions" | "permissions"
   >("roles");

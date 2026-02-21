@@ -1,4 +1,5 @@
 import { useState, useMemo, useRef, useEffect } from "react";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 import Navbar from "../../components/Navbar";
 import Button from "../../components/ui/Button";
 import {
@@ -108,6 +109,7 @@ const INITIAL_WORKSPACES: WorkspaceData[] = [
 ];
 
 export default function ManageWorkspaces() {
+  useDocumentTitle("Manage Teams");
   const [workspaces] = useState<WorkspaceData[]>(INITIAL_WORKSPACES);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);

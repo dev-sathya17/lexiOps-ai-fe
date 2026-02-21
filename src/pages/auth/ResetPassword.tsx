@@ -4,8 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
 import { NavLink } from "react-router-dom";
-import { useEffect } from "react";
 import Header from "../../components/Header";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 const resetPasswordSchema = z
   .object({
@@ -42,9 +42,7 @@ const ResetPassword = () => {
     resolver: zodResolver(resetPasswordSchema),
   });
 
-  useEffect(() => {
-    document.title = "LexiOps AI - Reset Password";
-  }, []);
+  useDocumentTitle("Secure Reset");
 
   const onSubmit = (data: ResetPasswordSchema) => {
     console.log("Reset Password Data:", data);

@@ -1,4 +1,5 @@
 import { useState, useMemo, useRef, useEffect } from "react";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 import Navbar from "../../components/Navbar";
 import Button from "../../components/ui/Button";
 import {
@@ -179,6 +180,7 @@ const STORAGE_BREAKDOWN = [
 ];
 
 export default function ManageFiles() {
+  useDocumentTitle("Manage Files");
   const [files] = useState<FileData[]>(INITIAL_FILES);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);

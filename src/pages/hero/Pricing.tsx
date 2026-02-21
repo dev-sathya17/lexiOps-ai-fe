@@ -6,6 +6,7 @@ import { plans } from "../../data/plans";
 import { useEffect, useState } from "react";
 import { STEPS } from "../../constants/steps";
 import Loader from "../../components/ui/Loader";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 const Pricing = () => {
   const [progress, setProgress] = useState(0);
@@ -18,9 +19,7 @@ const Pricing = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    document.title = "LexiOps AI - Pricing";
-  }, []);
+  useDocumentTitle("Pricing Plans");
 
   return (
     <>

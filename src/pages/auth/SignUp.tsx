@@ -9,6 +9,7 @@ import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Loader from "../../components/ui/Loader";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 import { STEPS } from "../../constants/steps";
 
 const signupSchema = z.object({
@@ -51,9 +52,7 @@ const SignUp = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    document.title = "LexiOps AI - Sign Up";
-  }, []);
+  useDocumentTitle("Join Us");
 
   const onSubmit = (data: SignUpSchema) => {
     console.log("Sign Up Data:", data);

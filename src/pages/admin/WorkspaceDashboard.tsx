@@ -1,4 +1,5 @@
 import { useState } from "react";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 import Navbar from "../../components/Navbar";
 import {
   Users,
@@ -102,6 +103,7 @@ const RECENT_WORKSPACE_FILES = [
 ];
 
 export default function WorkspaceDashboard() {
+  useDocumentTitle("Team Space");
   const [selectedWorkspace, setSelectedWorkspace] = useState(
     ADMIN_WORKSPACES[0],
   );

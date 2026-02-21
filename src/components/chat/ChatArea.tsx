@@ -1,9 +1,8 @@
 import { useState } from "react";
 import MessageList, { type Message } from "./MessageList";
 import MessageInput from "./MessageInput";
-import Navbar from "../Navbar";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Plus } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 export default function ChatArea() {
   const [messages, setMessages] = useState<Message[]>([]);

@@ -6,8 +6,8 @@ import { ChevronLeft } from "lucide-react";
 import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
 import { NavLink } from "react-router-dom";
-import { useEffect } from "react";
 import Header from "../../components/Header";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 const forgotPasswordSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email address"),
@@ -24,9 +24,7 @@ const ForgotPassword = () => {
     resolver: zodResolver(forgotPasswordSchema),
   });
 
-  useEffect(() => {
-    document.title = "LexiOps AI - Forgot Password";
-  }, []);
+  useDocumentTitle("Recover Password");
 
   const onSubmit = (data: ForgotPasswordSchema) => {
     console.log("Forgot Password Data:", data);

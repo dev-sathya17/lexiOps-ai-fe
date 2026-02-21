@@ -5,6 +5,7 @@ import CTASection from "../../components/CTASection";
 import { useEffect, useState } from "react";
 import { STEPS } from "../../constants/steps";
 import Loader from "../../components/ui/Loader";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 const Features = () => {
   const [progress, setProgress] = useState(0);
@@ -17,9 +18,7 @@ const Features = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    document.title = "LexiOps AI - Features";
-  }, []);
+  useDocumentTitle("Powerful Features");
   return (
     <>
       {progress === 100 ? (

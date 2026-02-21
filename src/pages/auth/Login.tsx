@@ -8,6 +8,7 @@ import GoogleIcon from "../../assets/icons/google.svg";
 import { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Loader from "../../components/ui/Loader";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 import { STEPS } from "../../constants/steps";
 
 const loginSchema = z.object({
@@ -44,9 +45,7 @@ const Login = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    document.title = "LexiOps AI - Login";
-  }, []);
+  useDocumentTitle("Secure Login");
 
   const onSubmit = (data: LoginSchema) => {
     console.log("Login Data:", data);

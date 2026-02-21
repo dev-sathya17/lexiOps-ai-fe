@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
+import useDocumentTitle from "../hooks/useDocumentTitle";
 
 const NotFound = () => {
+  useDocumentTitle("Page Not Found");
   return (
     <div
       className="min-h-screen w-full flex flex-col items-center justify-center px-6

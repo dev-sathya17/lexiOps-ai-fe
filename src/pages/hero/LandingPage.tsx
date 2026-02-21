@@ -6,6 +6,7 @@ import CTASection from "../../components/CTASection";
 import { features } from "../../data/Features";
 import { useEffect, useState } from "react";
 import Loader from "../../components/ui/Loader";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 import { STEPS } from "../../constants/steps";
 
 const LandingPage = () => {
@@ -19,9 +20,7 @@ const LandingPage = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    document.title = "LexiOps AI - Home";
-  }, []);
+  useDocumentTitle("Welcome");
 
   return (
     <>

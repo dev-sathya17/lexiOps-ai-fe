@@ -1,4 +1,5 @@
 import { useState, useMemo, useRef, useEffect } from "react";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 import Navbar from "../../components/Navbar";
 import Button from "../../components/ui/Button";
 import Input from "../../components/ui/Input";
@@ -150,6 +151,7 @@ const INITIAL_USERS: User[] = [
 ];
 
 export default function ManageUsers() {
+  useDocumentTitle("Manage Users");
   const [users, setUsers] = useState<User[]>(INITIAL_USERS);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);

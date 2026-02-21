@@ -1,4 +1,5 @@
 import { useState } from "react";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 import Navbar from "../../components/Navbar";
 import {
   Users as UsersIcon,
@@ -14,9 +15,6 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-
-// Standard UI components if they were available, but using raw JSX for consistency with other admin pages
-// We'll reuse the Button and other styles from previous components
 
 // Stats Data
 const DASHBOARD_STATS = [
@@ -163,6 +161,7 @@ const RECENT_FILES = [
 ];
 
 export default function AdminDashboard() {
+  useDocumentTitle("Admin Insights");
   const [activeChartTab, setActiveChartTab] = useState("week");
 
   // Chart Calculations

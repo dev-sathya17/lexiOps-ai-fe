@@ -7,6 +7,7 @@ import {
 } from "../../data/docs";
 import Loader from "../../components/ui/Loader";
 import { STEPS } from "../../constants/steps";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 const docCategories = [...initialCategories, faqCategory];
 
@@ -33,9 +34,7 @@ const Docs = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    document.title = "LexiOps AI - Docs";
-  }, []);
+  useDocumentTitle("Documentation");
 
   return (
     <>

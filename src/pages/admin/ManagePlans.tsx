@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 import Navbar from "../../components/Navbar";
 import Button from "../../components/ui/Button";
 import Input from "../../components/ui/Input";
@@ -56,6 +57,7 @@ const INITIAL_PLANS: Plan[] = [
 ];
 
 export default function ManagePlans() {
+  useDocumentTitle("Subscription Plans");
   const [plans, setPlans] = useState<Plan[]>(INITIAL_PLANS);
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
