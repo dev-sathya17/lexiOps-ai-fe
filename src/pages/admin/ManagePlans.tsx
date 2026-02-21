@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useEffect } from "react";
+import { useState, useMemo } from "react";
 import Navbar from "../../components/Navbar";
 import Button from "../../components/ui/Button";
 import Input from "../../components/ui/Input";
@@ -8,7 +8,6 @@ import {
   Plus,
   Trash2,
   Edit2,
-  X,
   CreditCard,
   FileText,
   HardDrive,

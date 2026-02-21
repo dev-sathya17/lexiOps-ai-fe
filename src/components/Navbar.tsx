@@ -16,6 +16,7 @@ import {
   CreditCard,
   ChevronDown,
   ShieldCheck,
+  ShieldAlert,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "react-router-dom";
@@ -24,13 +25,6 @@ interface NavbarProps {
   onToggleSidebar?: () => void;
   activePath?: string;
 }
-
-// type NavItem {
-//   icon: IconType;
-//   label: string;
-//   path: string;
-//   active: boolean;
-// }
 
 export default function Navbar({ onToggleSidebar, activePath }: NavbarProps) {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
@@ -67,7 +61,7 @@ export default function Navbar({ onToggleSidebar, activePath }: NavbarProps) {
   const managementItems = [
     {
       icon: Database,
-      label: "Manage files",
+      label: "Manage Files",
       path: "/admin/files",
       active: activePath === "/admin/files",
     },
@@ -79,15 +73,21 @@ export default function Navbar({ onToggleSidebar, activePath }: NavbarProps) {
     },
     {
       icon: FolderTree,
-      label: "Manage workspace",
+      label: "Manage Workspace",
       path: "/admin/workspaces",
       active: activePath === "/admin/workspaces",
     },
     {
       icon: CreditCard,
-      label: "Manage plans",
+      label: "Manage Plans",
       path: "/admin/plans",
       active: activePath === "/admin/plans",
+    },
+    {
+      icon: ShieldAlert,
+      label: "Manage RBAC",
+      path: "/admin/rbac",
+      active: activePath === "/admin/rbac",
     },
   ];
 
@@ -296,9 +296,7 @@ export default function Navbar({ onToggleSidebar, activePath }: NavbarProps) {
                       }`}
                     >
                       <item.icon size={16} />
-                      <span className="lowercase first-letter:uppercase">
-                        {item.label}
-                      </span>
+                      <span>{item.label}</span>
                     </NavLink>
                   ))}
                 </div>

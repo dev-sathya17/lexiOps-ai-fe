@@ -16,6 +16,7 @@ import ManageWorkspaces from "../pages/admin/ManageWorkspaces";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import WorkspaceDashboard from "../pages/admin/WorkspaceDashboard";
 import ManagePlans from "../pages/admin/ManagePlans";
+import ManageRBAC from "../pages/admin/ManageRBAC";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
       { path: "/admin/files", element: <ManageFiles /> },
       { path: "/admin/workspaces", element: <ManageWorkspaces /> },
       { path: "/admin/plans", element: <ManagePlans /> },
+      { path: "/admin/rbac", element: <ManageRBAC /> },
       { path: "*", element: <NotFound /> },
     ],
   },
